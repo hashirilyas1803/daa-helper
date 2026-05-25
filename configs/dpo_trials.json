@@ -1,0 +1,60 @@
+{
+  "description": "5 DPO trial configurations - varies beta, learning rate, batch size, epochs",
+  "trials": [
+    {
+      "name": "trial_1_conservative",
+      "beta": 0.1,
+      "learning_rate": 5e-6,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_length": 1024,
+      "max_prompt_length": 512,
+      "description": "Conservative DPO baseline - standard beta and low LR"
+    },
+    {
+      "name": "trial_2_low_beta",
+      "beta": 0.01,
+      "learning_rate": 5e-6,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_length": 1024,
+      "max_prompt_length": 512,
+      "description": "Very low beta - minimal KL constraint, allows large drift from SFT model"
+    },
+    {
+      "name": "trial_3_high_beta",
+      "beta": 0.5,
+      "learning_rate": 1e-6,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_length": 1024,
+      "max_prompt_length": 512,
+      "description": "High beta - strong KL penalty, stays close to SFT model"
+    },
+    {
+      "name": "trial_4_high_lr",
+      "beta": 0.1,
+      "learning_rate": 5e-5,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_length": 1024,
+      "max_prompt_length": 512,
+      "description": "Aggressive learning rate - tests training stability"
+    },
+    {
+      "name": "trial_5_long_training",
+      "beta": 0.1,
+      "learning_rate": 5e-6,
+      "per_device_train_batch_size": 1,
+      "gradient_accumulation_steps": 8,
+      "num_train_epochs": 3,
+      "max_length": 1024,
+      "max_prompt_length": 512,
+      "description": "More epochs, smaller batch - sees data multiple times"
+    }
+  ]
+}

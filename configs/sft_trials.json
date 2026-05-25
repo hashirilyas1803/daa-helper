@@ -1,0 +1,70 @@
+{
+  "description": "5 SFT trial configurations - deliberately wide range per assignment requirement",
+  "trials": [
+    {
+      "name": "trial_1_baseline",
+      "lora_r": 8,
+      "lora_alpha": 16,
+      "lora_dropout": 0.05,
+      "target_modules": ["q_proj", "v_proj"],
+      "learning_rate": 2e-4,
+      "per_device_train_batch_size": 4,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_seq_length": 1024,
+      "description": "Standard LoRA baseline: rank 8, attention q/v only, standard LR"
+    },
+    {
+      "name": "trial_2_mlp_low_rank",
+      "lora_r": 4,
+      "lora_alpha": 8,
+      "lora_dropout": 0.05,
+      "target_modules": ["gate_proj", "up_proj", "down_proj"],
+      "learning_rate": 1e-4,
+      "per_device_train_batch_size": 8,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 2,
+      "max_seq_length": 1024,
+      "description": "Low rank, MLP-only - tests if feed-forward layers alone carry the behavior"
+    },
+    {
+      "name": "trial_3_attn_high_rank",
+      "lora_r": 32,
+      "lora_alpha": 64,
+      "lora_dropout": 0.05,
+      "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
+      "learning_rate": 2e-4,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 8,
+      "num_train_epochs": 1,
+      "max_seq_length": 1024,
+      "description": "High rank, full attention - tests capacity ceiling for attention adaptation"
+    },
+    {
+      "name": "trial_4_all_linear_slow",
+      "lora_r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "target_modules": "all-linear",
+      "learning_rate": 5e-5,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 3,
+      "max_seq_length": 1024,
+      "description": "All linear layers, low LR, more epochs - careful slow learning"
+    },
+    {
+      "name": "trial_5_aggressive_full",
+      "lora_r": 64,
+      "lora_alpha": 128,
+      "lora_dropout": 0.1,
+      "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"],
+      "learning_rate": 5e-4,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_seq_length": 1024,
+      "description": "Highest rank, full coverage, aggressive LR - tests upper bound"
+    }
+  ]
+}

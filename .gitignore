@@ -1,0 +1,26 @@
+# Model checkpoints (push to HF Hub instead)
+models/
+*.bin
+*.safetensors
+*.pt
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# OS
+.DS_Store
+
+# Secrets
+.env
+*.token
+
+# Kaggle
+/kaggle/
+
+# Cache
+.cache/
+~/.cache/
