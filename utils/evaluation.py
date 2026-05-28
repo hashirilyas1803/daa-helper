@@ -19,7 +19,7 @@ def compute_bleu(prediction: str, reference: str) -> float:
 
 
 def compute_bertscore(predictions: List[str], references: List[str],
-                     model_type: str = "microsoft/deberta-xlarge-mnli",
+                     model_type: str = "roberta-large",
                      device: str = None) -> Dict[str, List[float]]:
     """Compute BERTScore P/R/F1 for a list of predictions vs references."""
     from bert_score import score as bert_score_fn
