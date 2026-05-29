@@ -23,7 +23,7 @@
       "learning_rate": 1e-4,
       "per_device_train_batch_size": 8,
       "gradient_accumulation_steps": 4,
-      "num_train_epochs": 2,
+      "num_train_epochs": 1,
       "max_seq_length": 1024,
       "description": "Low rank, MLP-only - tests if feed-forward layers alone carry the behavior"
     },
@@ -49,9 +49,9 @@
       "learning_rate": 5e-5,
       "per_device_train_batch_size": 2,
       "gradient_accumulation_steps": 4,
-      "num_train_epochs": 3,
+      "num_train_epochs": 1,
       "max_seq_length": 1024,
-      "description": "All linear layers, low LR, more epochs - careful slow learning"
+      "description": "All linear layers, low LR - careful slow learning"
     },
     {
       "name": "trial_5_aggressive_full",
