@@ -1,0 +1,24 @@
+{
+  "winning_trial": "trial_4_all_linear_slow",
+  "winning_config": {
+    "name": "trial_4_all_linear_slow",
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": "all-linear",
+    "learning_rate": 5e-05,
+    "per_device_train_batch_size": 2,
+    "gradient_accumulation_steps": 4,
+    "num_train_epochs": 1,
+    "max_seq_length": 1024,
+    "description": "All linear layers, low LR - careful slow learning"
+  },
+  "winning_metrics": {
+    "mean_bleu": 7.4903983949874515,
+    "mean_bertscore_f1": 0.8166188955307007,
+    "mean_bertscore_precision": 0.8228893339633941,
+    "mean_bertscore_recall": 0.8104794561862946,
+    "combined_score": 0.4457614397402876,
+    "n_prompts": 10
+  }
+}
