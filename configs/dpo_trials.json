@@ -9,7 +9,6 @@
       "gradient_accumulation_steps": 4,
       "num_train_epochs": 1,
       "max_length": 1024,
-      "max_prompt_length": 512,
       "description": "Conservative DPO baseline - standard beta and low LR"
     },
     {
@@ -20,7 +19,6 @@
       "gradient_accumulation_steps": 4,
       "num_train_epochs": 1,
       "max_length": 1024,
-      "max_prompt_length": 512,
       "description": "Very low beta - minimal KL constraint, allows large drift from SFT model"
     },
     {
@@ -31,7 +29,6 @@
       "gradient_accumulation_steps": 4,
       "num_train_epochs": 1,
       "max_length": 1024,
-      "max_prompt_length": 512,
       "description": "High beta - strong KL penalty, stays close to SFT model"
     },
     {
@@ -42,7 +39,6 @@
       "gradient_accumulation_steps": 4,
       "num_train_epochs": 1,
       "max_length": 1024,
-      "max_prompt_length": 512,
       "description": "Aggressive learning rate - tests training stability"
     },
     {
@@ -53,7 +49,6 @@
       "gradient_accumulation_steps": 4,
       "num_train_epochs": 1,
       "max_length": 1024,
-      "max_prompt_length": 512,
       "description": "Larger batch size - tests effect of batch size on preference learning"
     }
   ]
