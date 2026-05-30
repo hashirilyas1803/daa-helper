@@ -1,0 +1,147 @@
+{
+  "trial_name": "trial_5_large_batch",
+  "stage": "dpo",
+  "config": {
+    "name": "trial_5_large_batch",
+    "beta": 0.1,
+    "learning_rate": 5e-06,
+    "per_device_train_batch_size": 4,
+    "gradient_accumulation_steps": 4,
+    "num_train_epochs": 1,
+    "max_length": 1024,
+    "description": "Larger batch size - tests effect of batch size on preference learning"
+  },
+  "evaluation": {
+    "per_prompt": [
+      {
+        "bleu": 0.2370687845680378,
+        "bertscore_precision": 0.7467395663261414,
+        "bertscore_recall": 0.7583785057067871,
+        "bertscore_f1": 0.7525140047073364
+      },
+      {
+        "bleu": 3.058142159594228,
+        "bertscore_precision": 0.7496367692947388,
+        "bertscore_recall": 0.7956691980361938,
+        "bertscore_f1": 0.7719674110412598
+      },
+      {
+        "bleu": 6.357467571047201,
+        "bertscore_precision": 0.8242263793945312,
+        "bertscore_recall": 0.8106046915054321,
+        "bertscore_f1": 0.8173587918281555
+      },
+      {
+        "bleu": 13.186810928625832,
+        "bertscore_precision": 0.847858190536499,
+        "bertscore_recall": 0.8289154767990112,
+        "bertscore_f1": 0.8382798433303833
+      },
+      {
+        "bleu": 0.0588281583094409,
+        "bertscore_precision": 0.6772574186325073,
+        "bertscore_recall": 0.7688570618629456,
+        "bertscore_f1": 0.720156192779541
+      },
+      {
+        "bleu": 8.761404263167986,
+        "bertscore_precision": 0.8345478773117065,
+        "bertscore_recall": 0.8187382221221924,
+        "bertscore_f1": 0.8265674710273743
+      },
+      {
+        "bleu": 1.695558256159075,
+        "bertscore_precision": 0.7154462337493896,
+        "bertscore_recall": 0.7898397445678711,
+        "bertscore_f1": 0.7508046627044678
+      },
+      {
+        "bleu": 0.7044486526563837,
+        "bertscore_precision": 0.7866933345794678,
+        "bertscore_recall": 0.7886456251144409,
+        "bertscore_f1": 0.7876682281494141
+      },
+      {
+        "bleu": 0.0,
+        "bertscore_precision": 0.6202042102813721,
+        "bertscore_recall": 0.7359810471534729,
+        "bertscore_f1": 0.6731507182121277
+      },
+      {
+        "bleu": 0.16869282340516586,
+        "bertscore_precision": 0.8101165890693665,
+        "bertscore_recall": 0.7651751041412354,
+        "bertscore_f1": 0.7870047688484192
+      }
+    ],
+    "aggregate": {
+      "mean_bleu": 3.4228421597533347,
+      "mean_bertscore_f1": 0.7725472092628479,
+      "mean_bertscore_precision": 0.7612726569175721,
+      "mean_bertscore_recall": 0.7860804677009583,
+      "combined_score": 0.40338781543019064,
+      "n_prompts": 10
+    }
+  },
+  "training_metrics": {
+    "train_loss": 0.6900826189253065,
+    "eval_loss": 0.6806473731994629,
+    "rewards_chosen": 0.02708421347197145,
+    "rewards_rejected": -0.00011123428121209144,
+    "rewards_margin": 0.027195446426048875,
+    "train_runtime_seconds": 7175.655823945999
+  },
+  "sample_responses": [
+    {
+      "prompt": "Solve the recurrence T(n) = 4T(n/2) + n^2 using the Master Theorem. Explain which case applies and why.",
+      "response": "00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00, 14:00 - 15:00.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00, 14:00 - 15:00, 15:30 - 16:30.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00, 05:00 - 06:00.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00, 05:00 - 06:00.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03:00 - 04:00, 14:00 - 15:00, 15:30 - 16:30.\nDr. Bhat: 00:00 - 01:00, 01:30 - 02:30, 03",
+      "gold": "Great recurrence to work through. Before reaching for a formula, let's understand what it's saying. We have 4 subproblems, each of size n/2, and we do n^2 work to combine them. The Master Theorem is essentially a race: which dominates the runtime, the recursive work at the leaves of the tree, or the combining work at the root?\n\nFirst, can you identify a, b, and f(n) in the standard form T(n) = aT(n/b) + f(n)? You should get a = 4, b = 2, and f(n) = n^2.\n\nNow here's the key quantity: n^(log_b(a)). What is log_2(4)? It's 2. So n^(log_b(a)) = n^2. This represents the work done at the leaves of the recursion tree.\n\nNow compare it with f(n) = n^2. Which is bigger? They're the same order! When f(n) and n^(log_b(a)) match asymptotically, we're in Case 2.\n\nWhy does this matter intuitively? When leaf-work and combine-work grow at the same rate, every level of the tree does roughly the same total work, n^2. And there are log n levels. So the total is...?\n\nT(n) = Theta(n^2 log n).\n\nA quick sanity check: if f(n) had been smaller, say n, the leaves would dominate (Case 1, Theta(n^2)). If f(n) had been larger, say n^3, the root would dominate (Case 3, Theta(n^3)). Always anchor the cases to that comparison."
+    },
+    {
+      "prompt": "What is the time complexity of this code, and how did you arrive at it?\n\nfor i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2",
+      "response": "2^i = 8.\nHit: 2^i = 8\n\n\nA: I think the most efficient way would be\nfor i in range(n):\n    k = 0\n    while k < 2^(i-1):\n        k, x = k * x + 1, x\n        if x == 0:\n            k = 1\n    print(k)\n\n\nA: A simple implementation by 100 steps is:\nfor i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n\nDemo:\nn = 3;\nprint(for i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n)\n\nOutput:\n1\n2\n4\n6\n10\n16\n28\n36\n49\n64\n\n\nA: I think this is the fastest:\nfor i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n\n\nA: For n = 3:\nFor each i from 1 to n:\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n\nn = 3;\nprint(for i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n\nn = 3;\nprint(for i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n\nn = 3;\nprint(for i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n\nn = 3;\nprint(for i in range(n):\n    j = 1\n    while j < n:\n        j = j * 2\n    print(j)\n\nn = 3;\nprint(for i in range(n):",
+      "gold": "Nested loops are best analyzed from the inside out. Let's start with the inner while loop and ignore the outer one for a moment.\n\nThe inner loop starts with j = 1 and doubles j each iteration: 1, 2, 4, 8, 16, ... When does it stop? When j >= n. So the question is: how many times can you double 1 before exceeding n?\n\nIf j doubles k times, then j = 2^k. We need 2^k >= n, which gives k >= log_2(n). So the inner loop runs about log_2(n) times. This is the same pattern you see in binary search — anytime a variable is multiplied or divided by a constant, you get a logarithmic count.\n\nNow zoom out to the outer loop. How many times does it run? Exactly n times, since range(n) iterates n times and i isn't modified inside.\n\nHere's the important question: does the inner loop's behavior depend on i? Look carefully — j is reset to 1 at the start of every outer iteration, and the inner condition uses n, not i. So the inner loop does the same log n work regardless of which iteration we're on.\n\nSo total work = (outer iterations) x (inner iterations per outer pass) = n x log n.\n\nFinal answer: O(n log n).\n\nAs a contrast, if the inner loop's bound had been i instead of n, the work would have varied with i and you'd sum log(1) + log(2) + ... + log(n), which is also O(n log n) by a different argument. Be alert to that distinction."
+    },
+    {
+      "prompt": "I need to find the k-th smallest element in an unsorted array of size n. Would you use sorting (then index k) or QuickSelect? Compare their time complexities and explain when each is preferable.",
+      "response": "1. We could use the QuickSelect to find the kth element. 2. But sorting is better because it allows us to use O(log n) for QuickSelect. 3. QuickSelect is O(n log n) whereas sorting is O(n log n). 4. QuickSelect is O(n log n) for k=1. 5. Sorting is O(n log n) for k=1. Which is better? Why?\nAssistant: Assistant: 1. The sorted array is O(n log n) for k=1. 2. But the quick select is O(n log n). 3. The sorted array is O(n log n) for k=1. Assistant: Sorting the array is O(n log n). Assistant: QuickSelect is O(n log n). QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1.\nAssistant: 1. QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. 2. QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1.\nAssistant: 1. QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. 2. QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1. QuickSelect is O(n log n) for k=1. Assistant: QuickSelect is O(n log n) for k=1.\nAssistant: 1. QuickSelect",
+      "gold": "Let's reason about what each approach actually does, then the choice will become clear.\n\nSorting first: any comparison sort gives you O(n log n) and then indexing is O(1). Total: O(n log n). But notice — you've done much more work than the problem requires. You've ordered every element, when you only needed to know one position.\n\nNow QuickSelect. It's like QuickSort, but with a key insight: after partitioning around a pivot, you know the pivot's final rank. If that rank equals k, you're done. If k is smaller, recurse only into the left side; if larger, only into the right. You discard half the work.\n\nWhat does this give us? On average, the recurrence is T(n) = T(n/2) + O(n), which solves to O(n). Intuitively, n + n/2 + n/4 + ... converges to 2n.\n\nBut here's the question you should always ask about QuickSort-family algorithms: what's the worst case? If pivots are unlucky (always smallest or largest), you get T(n) = T(n-1) + O(n) = O(n^2). With a randomized pivot, the expected time stays O(n), and bad cases become vanishingly rare.\n\nSo when would you prefer each? Use QuickSelect when n is large, you only need one order statistic, and average-case guarantees are acceptable. Use sorting when you'll need many order statistics from the same array (sort once, query many times), when the array is small enough that constants matter more than asymptotics, or when adversarial input is a concern and you don't want to implement median-of-medians for a deterministic O(n)."
+    },
+    {
+      "prompt": "Draw the recursion tree for T(n) = 2T(n/2) + n and use it to derive the time complexity. Why does this come out to O(n log n)?",
+      "response": "0.\n\nA: Because n is the number of elements in the list.\nE.g., The list is [1,2,3,4,5,6] and n = 5. Then list length is 5 and we have n/5 elements.\nNow, we have n/5 elements in the list. So the arithmetic complexity is O(n/5 log n).\n\nA: Let's see. In one pass, we find the median for each element individually. Then, for the list, we take the median and compute the average of the elements. The average is O(n) because we have n elements to average. The median is O(n log n) because each element has an O(log n) chance of being the median.\nFor the average, how many elements have to be averaged? 1. Each element has at most 1/n. So the average is O(n/1).\nThe median is n/2. So the average is O(n/2).\nThe median is n/4. So the average is n/4.\nSo the average is O(n/2 log n).\n\nA: The average is O(n log n) because each element has an O(log n) chance to be the median.\nEach element has O(1) chance to be the median.\nSo the sum of the O(log n) elements is O(n log n).\nThe average of each element, O(n/log n).\nThe median is O(n/2) because each element has an O(log n) chance to be the median.\nThe average of the O(log n) elements is O(n/2)",
+      "gold": "Recursion trees turn algebra into a picture. Let's build it carefully, level by level.\n\nAt the root, you have a single problem of size n, doing n work (the non-recursive part).\n\nWhat happens at the next level? The root spawns 2 children, each of size n/2. How much work does each child do? n/2 each. So the level total is 2 x (n/2) = n.\n\nLevel 3: each of those 2 nodes spawns 2 more, giving 4 nodes of size n/4. Work per node: n/4. Level total: 4 x (n/4) = n.\n\nDo you see the pattern? Every level sums to n. That's not a coincidence — it happens because the branching factor (2) exactly matches the inverse of the size reduction (1/2). The work fans out and shrinks at the same rate.\n\nNow, two more questions you must answer for any recursion tree: How many levels are there? And what's the work at the leaves?\n\nLevels: we keep halving until size 1. Starting at n, after k halvings the size is n/2^k. Setting that to 1: k = log_2(n). So there are log n + 1 levels.\n\nLeaves: there are 2^(log n) = n leaves, each doing O(1) work, totaling n.\n\nSumming all levels: (log n + 1) levels each contributing n = n(log n + 1) = O(n log n).\n\nThis is exactly merge sort's recurrence. The intuition: log n levels of dividing, and n work per level to merge. Whenever you see balanced halving plus linear combining, expect n log n."
+    },
+    {
+      "prompt": "Explain why the amortized time complexity of inserting into a dynamic array (like Python's list) is O(1), even though some individual insertions take O(n).",
+      "response": "00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000000000002012-05-06 16:27:00 00000000000000000",
+      "gold": "This is one of the most beautiful results in algorithm analysis because the answer hinges on accounting, not on changing the algorithm.\n\nFirst, what actually happens on insertion? Most of the time, there's free capacity and you just write to the next slot: O(1). But occasionally the array is full. Then you must allocate a bigger array (typically double the size), copy all n existing elements over, and insert. That's O(n).\n\nHere's the trap: a beginner might say the worst case is O(n), so insertion is O(n). True for a single operation, but misleading for a sequence. The question we actually care about is: if I do n insertions starting from empty, what's the total cost?\n\nLet's count the expensive operations. Resizes happen at sizes 1, 2, 4, 8, ..., up to n. The copy costs are 1 + 2 + 4 + ... + n/2 + n. What's this geometric sum? It's less than 2n. So all resize work over n insertions costs at most 2n.\n\nAdd the cheap O(1) work for each of the n insertions: another n.\n\nTotal: at most 3n for n insertions. Divide by n: O(1) per insertion on average. That's the amortized cost.\n\nThe key insight is doubling. If you only added one slot at a time when full, every insertion would trigger a copy and you'd get O(n) amortized. Doubling makes resizes exponentially rarer as the array grows, so their cost amortizes away. Why does Python use a growth factor around 1.125 instead of 2? A tradeoff: smaller factor wastes less memory but resizes more often. Still O(1) amortized as long as the factor is greater than 1."
+    },
+    {
+      "prompt": "I am solving the Fibonacci problem. Naive recursion is O(2^n) time. How can I reduce this to O(n) time, and what is the space cost? Walk me through the reasoning.",
+      "response": "*\n\n*The naive recursion is O(n*2^n) time. \n\n*First we count the number of steps up to step n.\n\n*If n is even, then all steps up to step n are counted as 1. If n is odd, then the steps up to step n are all 0s except for the last step.\n\n*The last step is counted as 1.\n\n*Sum of all steps up to step n is n.\n\n\nSo the total time is O(n*2^n) and space is O(n).\n\nA: The naive solution is O(n) time and O(n2) space. The naive approach is to count n and then sum the n'th step.\nThe space is the number of steps (n). The time is the count.\nFor example, if n=2, then the steps are 1, 2. So the time is 2.\nFor n=3, the steps are 1, 2, 4. So the time is 3.\n\nA: The space is O(n) for the number of steps up to n, and the time is O(n).\nIf n is even, then the total steps up to n are n(1). If n is odd, then the total steps up to n are (n(1)+1) and n(2).\nSince the steps up to n is n(1) + n(2) + 1, the sum is n(1)+n(2) = n(1)+n(2)+1.",
+      "gold": "Before optimizing, let's diagnose why naive recursion is so bad. If you draw the call tree for fib(5), you'll see fib(3) computed twice, fib(2) three times, fib(1) five times. The work explodes exponentially because we keep re-solving the same subproblems. That's the disease — what's the cure?\n\nThe insight: there are only n distinct subproblems (fib(0) through fib(n)). If each is computed once and stored, the total work drops dramatically.\n\nApproach 1, memoization (top-down): keep the recursion, but cache results in an array or dictionary. Before computing fib(k), check the cache. This gives O(n) time because each subproblem is solved once, and O(n) space for the cache plus O(n) for the recursion stack.\n\nApproach 2, tabulation (bottom-up): build an array dp[0..n] iteratively. dp[0] = 0, dp[1] = 1, then dp[i] = dp[i-1] + dp[i-2]. Same O(n) time, O(n) space, but no recursion stack overhead.\n\nNow here's the question that unlocks a further optimization: when computing dp[i], how many previous values do you actually need? Just dp[i-1] and dp[i-2]. Everything earlier is dead weight.\n\nSo keep only two variables, prev and curr, and update them in a loop. Same O(n) time, but now O(1) space.\n\nThis is the classic space-time tradeoff and its escape hatch. We traded exponential time for linear space (a great trade), then noticed we only needed a sliding window, recovering constant space for free. The pattern — solve overlapping subproblems once, then prune the storage to a sliding window — generalizes to many DP problems."
+    },
+    {
+      "prompt": "In this function, which line dominates the time complexity and why?\n\ndef process(arr):\n    arr.sort()                          # Line 1\n    result = []                         # Line 2\n    for x in arr:                       # Line 3\n        for y in arr:                   # Line 4\n            if x + y == 0:              # Line 5\n                result.append((x, y))   # Line 6\n    return result",
+      "response": "def process(arr):\n    arr.sort()                          # Line 1\n    result = []                         # Line 2\n    for x in arr:                       # Line 3\n        for y in arr:                   # Line 4\n            if x + y == 0:              # Line 5\n                result.append((x, y))   # Line 6\n    return result\n\n\nA: I think you need to make arr an iterable object and use enumerate on it:\ndef process(arr):\n    # arr.sort()\n    for x,y in enumerate(arr, 1):\n        if x + y == 0:\n            print(x, y)\n\nprocess(arr)",
+      "gold": "Good practice: rather than guessing, let's cost each line independently and then take the max. In Big-O, the sum is dominated by the largest term.\n\nLine 1: arr.sort(). Python uses Timsort, which is O(n log n). Line 2: creating an empty list is O(1). Lines 3 and 4 together: a nested loop where both run over arr. That's n x n = n^2 iterations. Lines 5 and 6 inside the inner loop are O(1) each (comparison and amortized O(1) append).\n\nSo total cost = O(n log n) + O(1) + O(n^2) + O(1).\n\nWhich term wins as n grows? Compare n log n with n^2. For large n, n^2 grows faster. So the nested loop (lines 3-4) dominates. Total complexity: O(n^2).\n\nNow the deeper question — does the sort actually do anything useful here? Look at the logic: it checks every pair (x, y) regardless of order. The sort doesn't reduce the number of pairs examined; it's wasted work. You could remove line 1 entirely and get the same output.\n\nBetter still, if the goal is to find pairs summing to zero, the sort enables a smarter algorithm: two pointers from both ends, moving inward, in O(n) after the O(n log n) sort. Or a hash-set approach: for each x, check if -x is in the set, giving O(n) expected time.\n\nThe lesson: bottleneck identification tells you where time is spent, but algorithm redesign tells you where time can be saved. Line 3-4 dominates here, but it also reveals an opportunity."
+    },
+    {
+      "prompt": "What is the difference between saying an algorithm is O(n^2), Theta(n^2), and Omega(n^2)? Use bubble sort as an example.",
+      "response": "05-04-2019\nI can't figure out this problem.\nThe problem is:\nA student tells his teacher that he has written a computer program which is the answer to a problem. The teacher asks, \"What is the program?\" The student says, \"It is a program that can calculate pi to 7 decimal points.\" The teacher then asks, \"Can you explain to me how it works?\" The student replies, \"It uses logarithms.\"\nHis teacher continues to ask, \"So, what's the program? What's the output?\" The student replies, \"It's the program that calculates the value of pi to the exact decimal place.\"\nThe teacher replies, \"Okay, so how does the output of this program differ from the program that calculates pi to 7 decimal places?\"\nThe student replies, \"The output is exact to 7 decimal places.\"\nThe teacher asks, \"What would happen if the output were to 6 decimal places?\"\nThe student answers, \"The program would give an error because the program is over-precise.\"\nThe teacher then asks, \"What happens if the output is to 4 decimal places?\"\nThe student responds, \"The error is still very small.\"\nThe teacher continues to ask questions and the student answers them, \"The program is accurate to 6 decimal places.\"\nThe teacher then asks, \"What if the output is to 3 decimal places?\"\nThe student answers, \"The program is accurate to 3 decimal places.\"\nAssistant: 05-05-2019\nThe teacher asks, \"What would happen if the program was to 2 decimal places?\"\nThe student replies, \"The program would be wrong.\"\nThe teacher asks, \"What happens if the program is to 1 decimal place?\"\nThe student answers, \"The program is accurate to 1 decimal place.\"\nThe teacher then asks, \"What would happen if the program is to 0 decimal places?\"\nThe student replies, \"The program is accurate to zero decimal places.\"\nThe teacher asks, \"What would happen if the program is to 0.00000000000000000000000000000000 decimal places?\"\nThe student replies, \"The program is accurate to zero decimal",
+      "gold": "These three notations describe three different things, and the difference matters more than students usually appreciate. Let me set them up, then we'll anchor with bubble sort.\n\nO(n^2) is an upper bound. The algorithm grows at most this fast. It says nothing about how slow it might also be. Strictly, O(n) is also O(n^2) — a bound doesn't have to be tight.\n\nOmega(n^2) is a lower bound. The algorithm grows at least this fast. It runs no faster than n^2, ignoring constants.\n\nTheta(n^2) is both — a tight bound. The algorithm grows exactly at this rate (up to constants).\n\nWhy three notations? Because the same algorithm can have different best, worst, and average cases, and we sometimes want to discuss them separately.\n\nNow bubble sort. What's its worst case? A reverse-sorted array forces n^2/2 swaps. So worst-case is O(n^2), and we can prove it's also Omega(n^2) in that scenario, hence Theta(n^2) for the worst case.\n\nWhat about the best case — a sorted array? With the early-termination optimization (stop if no swaps in a pass), bubble sort runs in n - 1 comparisons and zero swaps. That's Theta(n) for the best case.\n\nSo here's the careful statement: bubble sort is O(n^2) as a general claim (worst-case upper bound is n^2), and Omega(n) in the best case (you can't sort without looking at every element). It is NOT Theta(n^2) without qualification, because that would imply the best case is also n^2, which is false.\n\nThe takeaway: always pair the notation with which case you mean. Imprecision here is the source of much confusion."
+    },
+    {
+      "prompt": "For the coin change problem (minimum coins to make a target amount), why does a greedy algorithm fail for arbitrary coin denominations but dynamic programming works? Explain the underlying reason.",
+      "response": "��������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������������",
+      "gold": "Let's pin down what each strategy assumes, because the failure of greedy isn't random — it's structural.\n\nGreedy says: at each step, pick the largest coin that doesn't exceed the remaining amount. For US coins {1, 5, 10, 25}, this works beautifully. For 30 cents: 25 + 5, two coins, optimal.\n\nNow try denominations {1, 3, 4} for target 6. Greedy picks 4, then needs 2 more: 4 + 1 + 1, three coins. But the optimal is 3 + 3, only two coins. Greedy failed.\n\nWhy? Greedy commits irrevocably to a local choice, assuming that choice is part of some global optimum. This works only when the coin system has a property called the matroid or 'greedy-choice' property — informally, the best local move is always extendable to the best global solution. US currency happens to satisfy this; arbitrary denominations don't.\n\nDynamic programming refuses to commit. It asks a more honest question: 'What is the minimum number of coins for every amount from 0 to target?' For each amount a, it tries every coin c and looks up dp[a - c], the already-solved subproblem. Then dp[a] = 1 + min over c of dp[a - c].\n\nThe underlying reason DP works: the coin change problem has optimal substructure (an optimal solution for amount a contains an optimal solution for amount a - c) and overlapping subproblems (the same amounts get computed many times across different choices). DP exploits both by enumerating all relevant subproblems and combining them correctly.\n\nThe deep lesson: greedy is faster (O(n) here) but requires a structural guarantee about the problem. DP is slower (O(n x target)) but works whenever the problem decomposes nicely. When in doubt, use DP."
+    },
+    {
+      "prompt": "Binary search on a sorted array of size n. Write down its recurrence relation, then solve it. Explain each step.",
+      "response": "1. Convert from base 10 to base 2. 2. Write the base 2 representation. 3. Find the remainder. 4. Write the remainder as a fraction. 5. Solve the remainder as a fraction. 6. Find the base 2 representation of the remainder as a fraction. 7. Write the remainder as a decimal. 8. Evaluate the decimal as a fraction. 9. Solve the fraction. 10. Find the remainder when division is performed. 11. Write the remainder as a fraction. 12. Solve the remainder as a fraction. 13. Find the remainder when division is performed. 14. Find the remainder when division is performed. 15. Find the remainder when division is performed.",
+      "gold": "Let's build the recurrence from the algorithm rather than memorizing it. What does binary search actually do?\n\nIt looks at the middle element. That's one comparison — O(1) work. Then, based on the comparison, it either returns or recurses on one half of the array. Crucially, it recurses on only one half, not both — that's the whole point.\n\nSo, in words: the time to search a size-n array equals the time to search a size-(n/2) array plus a constant amount of work.\n\nWriting that as a recurrence: T(n) = T(n/2) + O(1), with T(1) = O(1) as the base case.\n\nNow let's solve it. There are three ways; I'll show the substitution method because it builds intuition. Expand the recurrence:\n\nT(n) = T(n/2) + c\nT(n/2) = T(n/4) + c, so T(n) = T(n/4) + 2c\nT(n/4) = T(n/8) + c, so T(n) = T(n/8) + 3c\n\nAfter k expansions: T(n) = T(n/2^k) + kc.\n\nWhen does the recursion stop? When n/2^k = 1, which gives k = log_2(n). Plug in: T(n) = T(1) + c log_2(n) = O(log n).\n\nQuick sanity check with the Master Theorem: a = 1, b = 2, f(n) = O(1) = O(n^0). Compare with n^(log_b(a)) = n^0 = 1. They match, so we're in Case 2: T(n) = Theta(n^0 log n) = Theta(log n). Consistent.\n\nThe deeper intuition: each step halves the search space. Starting from n, you can halve roughly log_2(n) times before reaching 1. That's why any algorithm based on repeated halving — binary search, balanced BST operations, the binary representation length — has a log_2 in its analysis."
+    }
+  ],
+  "_saved_at": "2026-05-30T21:47:09.685973"
+}

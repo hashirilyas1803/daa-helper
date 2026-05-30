@@ -1,0 +1,21 @@
+{
+  "winning_trial": "trial_1_conservative",
+  "winning_config": {
+    "name": "trial_1_conservative",
+    "beta": 0.1,
+    "learning_rate": 5e-06,
+    "per_device_train_batch_size": 2,
+    "gradient_accumulation_steps": 4,
+    "num_train_epochs": 1,
+    "max_length": 1024,
+    "description": "Conservative DPO baseline - standard beta and low LR"
+  },
+  "winning_metrics": {
+    "mean_bleu": 3.2354979836132136,
+    "mean_bertscore_f1": 0.7784260272979736,
+    "mean_bertscore_precision": 0.7695246934890747,
+    "mean_bertscore_recall": 0.7887215971946716,
+    "combined_score": 0.40539050356705286,
+    "n_prompts": 10
+  }
+}
