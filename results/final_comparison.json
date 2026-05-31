@@ -1,0 +1,408 @@
+{
+  "base": {
+    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "quantization": "4-bit nf4",
+    "evaluation": {
+      "mean_bleu": 4.964937690247645,
+      "mean_bertscore_f1": 0.8010765314102173,
+      "mean_bertscore_precision": 0.7950509130954743,
+      "mean_bertscore_recall": 0.8074096143245697,
+      "combined_score": 0.42536295415634684,
+      "n_prompts": 10
+    }
+  },
+  "sft_all_trials": [
+    {
+      "name": "trial_1_baseline",
+      "config": {
+        "name": "trial_1_baseline",
+        "lora_r": 8,
+        "lora_alpha": 16,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "v_proj"
+        ],
+        "learning_rate": 0.0002,
+        "per_device_train_batch_size": 4,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_seq_length": 1024,
+        "description": "Standard LoRA baseline: rank 8, attention q/v only, standard LR"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 5.503219483067616,
+        "mean_bertscore_f1": 0.8089418232440948,
+        "mean_bertscore_precision": 0.8125029802322388,
+        "mean_bertscore_recall": 0.8054656147956848,
+        "combined_score": 0.43198700903738546,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 1.7581230345226468,
+        "eval_loss": NaN,
+        "train_runtime_seconds": 4042.08646607399,
+        "train_samples_per_second": 0.247,
+        "global_step": 63
+      }
+    },
+    {
+      "name": "trial_2_mlp_low_rank",
+      "config": {
+        "name": "trial_2_mlp_low_rank",
+        "lora_r": 4,
+        "lora_alpha": 8,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "gate_proj",
+          "up_proj",
+          "down_proj"
+        ],
+        "learning_rate": 0.0001,
+        "per_device_train_batch_size": 8,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_seq_length": 1024,
+        "description": "Low rank, MLP-only - tests if feed-forward layers alone carry the behavior"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 5.472497935923288,
+        "mean_bertscore_f1": 0.8000818371772767,
+        "mean_bertscore_precision": 0.7988965213298798,
+        "mean_bertscore_recall": 0.8013969659805298,
+        "combined_score": 0.4274034082682548,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 1.898607686161995,
+        "eval_loss": NaN,
+        "train_runtime_seconds": 4484.346041917801,
+        "train_samples_per_second": 0.223,
+        "global_step": 32
+      }
+    },
+    {
+      "name": "trial_3_attn_high_rank",
+      "config": {
+        "name": "trial_3_attn_high_rank",
+        "lora_r": 32,
+        "lora_alpha": 64,
+        "lora_dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj"
+        ],
+        "learning_rate": 0.0002,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 8,
+        "num_train_epochs": 1,
+        "max_seq_length": 1024,
+        "description": "High rank, full attention - tests capacity ceiling for attention adaptation"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 6.6376367150975355,
+        "mean_bertscore_f1": 0.814244520664215,
+        "mean_bertscore_precision": 0.8171282768249511,
+        "mean_bertscore_recall": 0.8114397764205933,
+        "combined_score": 0.4403104439075952,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 1.569190744369749,
+        "eval_loss": NaN,
+        "train_runtime_seconds": 4091.7092897892,
+        "train_samples_per_second": 0.244,
+        "global_step": 63
+      }
+    },
+    {
+      "name": "trial_4_all_linear_slow",
+      "config": {
+        "name": "trial_4_all_linear_slow",
+        "lora_r": 16,
+        "lora_alpha": 32,
+        "lora_dropout": 0.05,
+        "target_modules": "all-linear",
+        "learning_rate": 5e-05,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_seq_length": 1024,
+        "description": "All linear layers, low LR - careful slow learning"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 7.4903983949874515,
+        "mean_bertscore_f1": 0.8166188955307007,
+        "mean_bertscore_precision": 0.8228893339633941,
+        "mean_bertscore_recall": 0.8104794561862946,
+        "combined_score": 0.4457614397402876,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 2.276627445220947,
+        "eval_loss": NaN,
+        "train_runtime_seconds": 4716.562577009201,
+        "train_samples_per_second": 0.212,
+        "global_step": 125
+      }
+    },
+    {
+      "name": "trial_5_aggressive_full",
+      "config": {
+        "name": "trial_5_aggressive_full",
+        "lora_r": 64,
+        "lora_alpha": 128,
+        "lora_dropout": 0.1,
+        "target_modules": [
+          "q_proj",
+          "k_proj",
+          "v_proj",
+          "o_proj",
+          "gate_proj",
+          "up_proj",
+          "down_proj"
+        ],
+        "learning_rate": 0.0005,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_seq_length": 1024,
+        "description": "Highest rank, full coverage, aggressive LR - tests upper bound"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 5.6374585248290465,
+        "mean_bertscore_f1": 0.8170152187347413,
+        "mean_bertscore_precision": 0.8210219442844391,
+        "mean_bertscore_recall": 0.8130961179733276,
+        "combined_score": 0.43669490199151584,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 2.1458266563415527,
+        "eval_loss": NaN,
+        "train_runtime_seconds": 4775.391488075256,
+        "train_samples_per_second": 0.209,
+        "global_step": 125
+      }
+    }
+  ],
+  "sft_winner": {
+    "name": "trial_4_all_linear_slow",
+    "config": {
+      "name": "trial_4_all_linear_slow",
+      "lora_r": 16,
+      "lora_alpha": 32,
+      "lora_dropout": 0.05,
+      "target_modules": "all-linear",
+      "learning_rate": 5e-05,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_seq_length": 1024,
+      "description": "All linear layers, low LR - careful slow learning"
+    },
+    "aggregate_eval": {
+      "mean_bleu": 7.4903983949874515,
+      "mean_bertscore_f1": 0.8166188955307007,
+      "mean_bertscore_precision": 0.8228893339633941,
+      "mean_bertscore_recall": 0.8104794561862946,
+      "combined_score": 0.4457614397402876,
+      "n_prompts": 10
+    },
+    "training_metrics": {
+      "train_loss": 2.276627445220947,
+      "eval_loss": NaN,
+      "train_runtime_seconds": 4716.562577009201,
+      "train_samples_per_second": 0.212,
+      "global_step": 125
+    },
+    "selection_reason": "Highest combined BLEU+BERTScore on 10 test prompts; tie-break on lower eval loss."
+  },
+  "dpo_all_trials": [
+    {
+      "name": "trial_1_conservative",
+      "config": {
+        "name": "trial_1_conservative",
+        "beta": 0.1,
+        "learning_rate": 5e-06,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_length": 1024,
+        "description": "Conservative DPO baseline - standard beta and low LR"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 3.2354979836132136,
+        "mean_bertscore_f1": 0.7784260272979736,
+        "mean_bertscore_precision": 0.7695246934890747,
+        "mean_bertscore_recall": 0.7887215971946716,
+        "combined_score": 0.40539050356705286,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 0.6878104315863716,
+        "eval_loss": 0.6820483803749084,
+        "rewards_chosen": 0.02632515233126469,
+        "rewards_rejected": 0.0012295388209167869,
+        "rewards_margin": 0.025095614395104347,
+        "train_runtime_seconds": 6402.183519601822
+      }
+    },
+    {
+      "name": "trial_2_low_beta",
+      "config": {
+        "name": "trial_2_low_beta",
+        "beta": 0.01,
+        "learning_rate": 5e-06,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_length": 1024,
+        "description": "Very low beta - minimal KL constraint, allows large drift from SFT model"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 1.6347629625010693,
+        "mean_bertscore_f1": 0.7715034127235413,
+        "mean_bertscore_precision": 0.7632565975189209,
+        "mean_bertscore_recall": 0.7802761435508728,
+        "combined_score": 0.393925521174276,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 0.6926096757253011,
+        "eval_loss": 0.6921921968460083,
+        "rewards_chosen": 0.0025127295857600984,
+        "rewards_rejected": 0.000575376971391961,
+        "rewards_margin": 0.0019373525952687486,
+        "train_runtime_seconds": 6429.669528961182
+      }
+    },
+    {
+      "name": "trial_3_high_beta",
+      "config": {
+        "name": "trial_3_high_beta",
+        "beta": 0.5,
+        "learning_rate": 1e-06,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_length": 1024,
+        "description": "High beta - strong KL penalty, stays close to SFT model"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 2.7089550482600235,
+        "mean_bertscore_f1": 0.7807598829269409,
+        "mean_bertscore_precision": 0.7736857891082763,
+        "mean_bertscore_recall": 0.7884979546070099,
+        "combined_score": 0.40392471670477054,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 0.712170828713311,
+        "eval_loss": 0.6990629434585571,
+        "rewards_chosen": 0.0403255820274353,
+        "rewards_rejected": 0.017979145050048828,
+        "rewards_margin": 0.022346436977386475,
+        "train_runtime_seconds": 6422.444598674774
+      }
+    },
+    {
+      "name": "trial_4_high_lr",
+      "config": {
+        "name": "trial_4_high_lr",
+        "beta": 0.1,
+        "learning_rate": 5e-05,
+        "per_device_train_batch_size": 2,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_length": 1024,
+        "description": "Aggressive learning rate - tests training stability"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 1.4296661380414184,
+        "mean_bertscore_f1": 0.7802975058555603,
+        "mean_bertscore_precision": 0.7726645469665527,
+        "mean_bertscore_recall": 0.7884323060512543,
+        "combined_score": 0.39729708361798727,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 0.6636606693267822,
+        "eval_loss": 0.6105238795280457,
+        "rewards_chosen": 0.3253514756914228,
+        "rewards_rejected": 0.053082236042246225,
+        "rewards_margin": 0.2722692392766476,
+        "train_runtime_seconds": 6428.539636135101
+      }
+    },
+    {
+      "name": "trial_5_large_batch",
+      "config": {
+        "name": "trial_5_large_batch",
+        "beta": 0.1,
+        "learning_rate": 5e-06,
+        "per_device_train_batch_size": 4,
+        "gradient_accumulation_steps": 4,
+        "num_train_epochs": 1,
+        "max_length": 1024,
+        "description": "Larger batch size - tests effect of batch size on preference learning"
+      },
+      "aggregate_eval": {
+        "mean_bleu": 3.4228421597533347,
+        "mean_bertscore_f1": 0.7725472092628479,
+        "mean_bertscore_precision": 0.7612726569175721,
+        "mean_bertscore_recall": 0.7860804677009583,
+        "combined_score": 0.40338781543019064,
+        "n_prompts": 10
+      },
+      "training_metrics": {
+        "train_loss": 0.6900826189253065,
+        "eval_loss": 0.6806473731994629,
+        "rewards_chosen": 0.02708421347197145,
+        "rewards_rejected": -0.00011123428121209144,
+        "rewards_margin": 0.027195446426048875,
+        "train_runtime_seconds": 7175.655823945999
+      }
+    }
+  ],
+  "dpo_winner": {
+    "name": "trial_1_conservative",
+    "config": {
+      "name": "trial_1_conservative",
+      "beta": 0.1,
+      "learning_rate": 5e-06,
+      "per_device_train_batch_size": 2,
+      "gradient_accumulation_steps": 4,
+      "num_train_epochs": 1,
+      "max_length": 1024,
+      "description": "Conservative DPO baseline - standard beta and low LR"
+    },
+    "aggregate_eval": {
+      "mean_bleu": 3.2354979836132136,
+      "mean_bertscore_f1": 0.7784260272979736,
+      "mean_bertscore_precision": 0.7695246934890747,
+      "mean_bertscore_recall": 0.7887215971946716,
+      "combined_score": 0.40539050356705286,
+      "n_prompts": 10
+    },
+    "training_metrics": {
+      "train_loss": 0.6878104315863716,
+      "eval_loss": 0.6820483803749084,
+      "rewards_chosen": 0.02632515233126469,
+      "rewards_rejected": 0.0012295388209167869,
+      "rewards_margin": 0.025095614395104347,
+      "train_runtime_seconds": 6402.183519601822
+    },
+    "selection_reason": "Highest combined BLEU+BERTScore on 10 test prompts; tie-break on lower eval loss."
+  },
+  "progression": {
+    "base_combined": 0.42536295415634684,
+    "sft_winner_combined": 0.4457614397402876,
+    "dpo_winner_combined": 0.40539050356705286,
+    "improvement_sft_over_base": 0.02039848558394075,
+    "improvement_dpo_over_sft": -0.04037093617323473
+  },
+  "_saved_at": "2026-05-31T01:26:26.588082"
+}
