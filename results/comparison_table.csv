@@ -1,5 +1,5 @@
 Stage,Trial,LoRA_r,Targets,LR,Batch,Epochs,Beta,Mean_BLEU,Mean_BERTScore_F1,Combined_Score,Eval_Loss,Train_Time_s
-Base,qwen2.5-1.5b-instruct (4-bit),-,-,-,-,-,-,4.964937690247645,0.8010765314102173,0.42536295415634684,-,-
+Base,TinyLlama/TinyLlama_v1.1 (4-bit nf4),-,-,-,-,-,-,4.964937690247645,0.8010765314102173,0.42536295415634684,-,-
 SFT,trial_1_baseline,8,"['q_proj', 'v_proj']",0.0002,16,1,-,5.503219483067616,0.8089418232440948,0.43198700903738546,nan,4042.08646607399
 SFT,trial_2_mlp_low_rank,4,"['gate_proj', 'up_proj', 'down",0.0001,32,1,-,5.472497935923288,0.8000818371772767,0.4274034082682548,nan,4484.346041917801
 SFT,trial_3_attn_high_rank,32,"['q_proj', 'k_proj', 'v_proj',",0.0002,16,1,-,6.6376367150975355,0.814244520664215,0.4403104439075952,nan,4091.7092897892

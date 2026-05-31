@@ -1,6 +1,6 @@
 # Qualitative Comparison: Base vs SFT-winner vs DPO-winner
 
-- **Base model**: Qwen2.5-1.5B-Instruct (4-bit quantized)
+- **Base model**: TinyLlama/TinyLlama_v1.1 (4-bit nf4 quantized)
 - **SFT winner**: trial_4_all_linear_slow
 - **DPO winner**: trial_1_conservative
 

@@ -1,6 +1,6 @@
 {
   "base": {
-    "model": "Qwen/Qwen2.5-1.5B-Instruct",
+    "model": "TinyLlama/TinyLlama_v1.1",
     "quantization": "4-bit nf4",
     "evaluation": {
       "mean_bleu": 4.964937690247645,
@@ -404,5 +404,5 @@
     "improvement_sft_over_base": 0.02039848558394075,
     "improvement_dpo_over_sft": -0.04037093617323473
   },
-  "_saved_at": "2026-05-31T01:26:26.588082"
+  "_saved_at": "2026-05-31T14:57:59.240488"
 }
