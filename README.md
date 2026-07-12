@@ -8,8 +8,8 @@
 This pipeline fine-tunes `TinyLlama/TinyLlama_v1.1` (1.1B parameters) into a Design and Analysis of Algorithms (DAA) tutor that guides students through reasoning step-by-step using a Socratic style. The pipeline executes in two stages: Supervised Fine-Tuning (SFT) on CodeForces editorials for domain adaptation, followed by Direct Preference Optimization (DPO) on Socratic-vs-direct-answer preference pairs.
 
 ## Model Links
-* **SFT Winner Adapter:** [hashirilyas1803/daa-helper-tinyllama-sft-winner](https://huggingface.co/hashirilyas1803/daa-helper-tinyllama-sft-winner)
-* **DPO Winner Adapter:** [hashirilyas1803/daa-helper-tinyllama-dpo-winner](https://huggingface.co/hashirilyas1803/daa-helper-tinyllama-dpo-winner)
+* **SFT Winner Adapter:** [hashirilyas18/daa-helper-tinyllama-sft-winner](https://huggingface.co/hashirilyas1803/daa-helper-tinyllama-sft-winner)
+* **DPO Winner Adapter:** [hashirilyas18/daa-helper-tinyllama-dpo-winner](https://huggingface.co/hashirilyas1803/daa-helper-tinyllama-dpo-winner)
 
 ## Project Structure
 
