@@ -2,6 +2,9 @@
 
 **NLP with Deep Learning | Assignment 04 | Track 1, Option A (SFT → DPO)**
 
+**Authors:** Muhammad Hashir Ilyas (26972), Muhammad Imad Raza (26953), Saad Imam (27079)  
+**Institute:** Institute of Business Administration (IBA), Karachi
+
 This pipeline fine-tunes `TinyLlama/TinyLlama_v1.1` (1.1B parameters) into a Design and Analysis of Algorithms (DAA) tutor that guides students through reasoning step-by-step using a Socratic style. The pipeline executes in two stages: Supervised Fine-Tuning (SFT) on CodeForces editorials for domain adaptation, followed by Direct Preference Optimization (DPO) on Socratic-vs-direct-answer preference pairs.
 
 ## Model Links
